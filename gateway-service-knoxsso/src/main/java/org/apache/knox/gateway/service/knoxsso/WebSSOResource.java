@@ -368,12 +368,13 @@ public class WebSSOResource {
       }
       setCookie.append("; HttpOnly");
       if (secureOnly) {
-        setCookie.append("; Secure");
+        setCookie.append("; Secure; SameSite=None");
+      } else {
+        setCookie.append("; SameSite=Lax");
       }
       if (maxAge != -1) {
         setCookie.append("; Max-Age=").append(maxAge);
       }
-      setCookie.append("; SameSite=None");
       response.setHeader("Set-Cookie", setCookie.toString());
       LOGGER.addedJWTCookie();
     } catch (Exception e) {
