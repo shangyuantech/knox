@@ -24,8 +24,13 @@
         <rewrite template="{$serviceUrl[ATLAS]}/{**}"/>
     </rule>
 
-    <rule dir="IN" name="ATLAS/atlas/inbound/query" pattern="*://*:*/**/atlas/{**}?{**}">
-        <rewrite template="{$serviceUrl[ATLAS]}/{**}?{**}"/>
+    <rule dir="IN" name="ATLAS/atlas/inbound/query" pattern="*://*:*/*/*/atlas/{**}?{**}" flow="OR">
+        <match pattern="*://*:*/*/*/atlas/**/img/{**}?{**}">
+            <rewrite template="{$serviceUrl[ATLAS]}/img/{**}?{**}"/>
+        </match>
+        <match pattern="*://*:*/*/*/atlas/{**}?{**}">
+            <rewrite template="{$serviceUrl[ATLAS]}/{**}?{**}"/>
+        </match>
     </rule>
 
     <rule dir="OUT" name="ATLAS/atlas/outbound/contextpath">
